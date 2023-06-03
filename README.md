@@ -11,7 +11,7 @@ This Project Allows The user to perform Basic Crud operations on a MySQL databas
 	*GET  | http://localhost:8086/api/cards | Lists All Cards<br>
 	*GET | http://localhost:8086/api/cards/{cardId} | Show Card By Id<br>
 	*POST | http://localhost:8086/api/cards | Add A New Card<br>
-	*Put | http://localhost:8086/api/cards/{cardId} | Update an Existing Card<br>
+	*PUT | http://localhost:8086/api/cards/{cardId} | Update an Existing Card<br>
 	*DELETE | http://localhost:8086/api/cards{cardId} | Delete a Card By Id<br>
 <br>
 
