@@ -1,5 +1,7 @@
 package com.skilldistillery.cards.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -7,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Card {
@@ -20,9 +25,11 @@ public class Card {
 	private String cost;
 	private String rarity;
 	private double price;
-
 	@Column(name = "image_url")
 	private String imageURL;
+	@OneToMany(mappedBy="card")
+	@JsonIgnore
+	private List<InventoryItem> inventoryItems;
 
 	public Card() {
 		super();
@@ -38,6 +45,23 @@ public class Card {
 		this.price = price;
 		this.imageURL = imageURL;
 	}
+	
+	
+
+	public Card(int id, String name, String type, String cost, String rarity, double price, String imageURL,
+			List<InventoryItem> inventoryItems) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.cost = cost;
+		this.rarity = rarity;
+		this.price = price;
+		this.imageURL = imageURL;
+		this.inventoryItems = inventoryItems;
+	}
+
+	
 
 	public int getId() {
 		return id;
@@ -93,6 +117,60 @@ public class Card {
 
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
+	}
+
+	public List<InventoryItem> getInventoryItems() {
+		return inventoryItems;
+	}
+
+	public void setInventoryItems(List<InventoryItem> inventoryItems) {
+		this.inventoryItems = inventoryItems;
+	}
+	
+	public void addInventoryItem(InventoryItem inventoryItem) {
+		if (inventoryItems == null) {
+			inventoryItems = new ArrayList<>();
+		}
+		if (!inventoryItems.contains(inventoryItem)) {
+			inventoryItems.add(inventoryItem);
+			if (inventoryItem.getCard() != null) {
+				inventoryItem.getCard().removeInventoryItem(inventoryItem);
+
+			} else {
+				inventoryItem.setCard(this);
+			}
+		}
+	}
+
+	public void removeInventoryItem(InventoryItem inventoryItem) {
+		if (inventoryItems != null && inventoryItems.contains(inventoryItem)) {
+			inventoryItems.remove(inventoryItem);
+			inventoryItem.setCard(null);
+		}
+	}
+	
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Card [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", cost=");
+		builder.append(cost);
+		builder.append(", rarity=");
+		builder.append(rarity);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", imageURL=");
+		builder.append(imageURL);
+		builder.append(", inventoryItems=");
+		builder.append(inventoryItems.size());
+		builder.append("]");
+		return builder.toString();
 	}
 
 	@Override

@@ -1,8 +1,6 @@
 package com.skilldistillery.cards.entities;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,11 +12,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CardTest {
-	
+class UserTest {
+
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Card card;
+	private User user;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -33,25 +31,20 @@ class CardTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		card = em.find(Card.class, 1);
+		user = em.find(User.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		card = null;
+		user = null;
 		
 	}
-
+	
 	@Test
-	void test_Card_Mapping() {
-		assertNotNull(card);
-		assertEquals("Armored Scrapgorger", card.getName());
-	}
-	@Test
-	void test_Card_InventoryItem_OneToMany_Mapping() {
-		assertNotNull(card);
-		assertTrue(card.getInventoryItems().size()>0);
+	void test_InventoryItem_Condition_ManyToOne_mapping() {
+		assertNotNull(user);
+		assertEquals("Firsticus", user.getFirstName());
 	}
 
 }

@@ -14,11 +14,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CardTest {
-	
+class ConditionTest {
+
 	private static EntityManagerFactory emf;
 	private EntityManager em;
-	private Card card;
+	private Condition condition;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -33,25 +33,27 @@ class CardTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		card = em.find(Card.class, 1);
+		condition = em.find(Condition.class, 1);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		card = null;
+		condition = null;
+		
+	}
+	
+	@Test
+	void test_Condition_Entity_Mapping() {
+		assertNotNull(condition);
+		assertEquals("PSA 1", condition.getGrade());
 		
 	}
 
 	@Test
-	void test_Card_Mapping() {
-		assertNotNull(card);
-		assertEquals("Armored Scrapgorger", card.getName());
-	}
-	@Test
-	void test_Card_InventoryItem_OneToMany_Mapping() {
-		assertNotNull(card);
-		assertTrue(card.getInventoryItems().size()>0);
+	void test_InventoryItem_Condition_ManyToOne_Mapping() {
+		assertNotNull(condition);
+		assertTrue(condition.getInventoryItems().size()>0);
 	}
 
 }

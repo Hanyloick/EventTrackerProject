@@ -6,6 +6,9 @@
     
 <!--Beginning of Entities      -->
     <class>com.skilldistillery.cards.entities.Card</class>
+    <class>com.skilldistillery.cards.entities.Condition</class>
+    <class>com.skilldistillery.cards.entities.InventoryItem</class>
+    <class>com.skilldistillery.cards.entities.User</class>
     
 <!--End Entities  -->
     <properties>
