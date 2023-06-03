@@ -44,7 +44,7 @@ class CardTest {
 	@Test
 	void test() {
 		assertNotNull(card);
-		assertEquals("test", card.getName());
+		assertEquals("Armored Scrapgorger", card.getName());
 	}
 
 }

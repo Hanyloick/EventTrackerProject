@@ -24,10 +24,10 @@ public class CardServiceImpl implements CardService {
 	}
 
 	@Override
-	public Card getCard(int id) {
+	public Card showCard(int id) {
 		Card managedCard = cardRepo.findById(id);
 		if (managedCard != null) {
-		return managedCard;
+			return managedCard;
 		} else {
 			return null;
 		}
@@ -36,19 +36,34 @@ public class CardServiceImpl implements CardService {
 
 	@Override
 	public Card createCard(Card newCard) {
-		return newCard;
+		Card managedCard = cardRepo.saveAndFlush(newCard);
+		return managedCard;
+		
+	}
+
+	@Override
+	public Card updateCard(int cardId, Card card) {
+		Card managedCard = cardRepo.findById(cardId);
+		managedCard.setName(card.getName());
+		managedCard.setType(card.getType());
+		managedCard.setPrice(card.getPrice());
+		managedCard.setCost(card.getCost());
+		managedCard.setRarity(card.getRarity());
+		managedCard.setImageURL(card.getImageURL());
+		cardRepo.saveAndFlush(managedCard);
+		return managedCard;
 
 	}
 
 	@Override
-	public Card updateCard(int cardI, Card card) {
-		return card;
-
-	}
-
-	@Override
-	public Boolean delete(int cardId) {
-		return null;
+	public boolean delete(int cardId) {
+		Card managedCard = cardRepo.findById(cardId);
+		if (managedCard != null) {
+		cardRepo.delete(managedCard);
+		return true;
+		} else {
+			return false;
+		}
 
 	}
 }

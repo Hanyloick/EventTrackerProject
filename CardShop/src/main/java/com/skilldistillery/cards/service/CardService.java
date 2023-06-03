@@ -8,12 +8,13 @@ public interface CardService {
 
 	List<Card> index();
 
-	Card getCard(int id);
 
 	Card createCard(Card newCard);
 
 	Card updateCard(int cardI, Card card);
 
-	Boolean delete(int cardId);
+	boolean delete(int cardId);
+
+	Card showCard(int id);
 
 }
