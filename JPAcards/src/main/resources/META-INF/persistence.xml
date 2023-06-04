@@ -9,6 +9,7 @@
     <class>com.skilldistillery.cards.entities.Condition</class>
     <class>com.skilldistillery.cards.entities.InventoryItem</class>
     <class>com.skilldistillery.cards.entities.User</class>
+    <class>com.skilldistillery.cards.entities.Purchase</class>
     
 <!--End Entities  -->
     <properties>

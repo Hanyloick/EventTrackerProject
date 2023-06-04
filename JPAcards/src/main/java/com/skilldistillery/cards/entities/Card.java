@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,12 +27,15 @@ public class Card {
 	private String type;
 	private String cost;
 	private String rarity;
-	private double price;
 	@Column(name = "image_url")
 	private String imageURL;
-	@OneToMany(mappedBy="card")
 	@JsonIgnore
+	@OneToMany(mappedBy = "card")
 	private List<InventoryItem> inventoryItems;
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "user_deckbuilder", joinColumns = @JoinColumn(name = "card_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> users;
 
 	public Card() {
 		super();
@@ -42,13 +48,10 @@ public class Card {
 		this.type = type;
 		this.cost = cost;
 		this.rarity = rarity;
-		this.price = price;
 		this.imageURL = imageURL;
 	}
-	
-	
 
-	public Card(int id, String name, String type, String cost, String rarity, double price, String imageURL,
+	public Card(int id, String name, String type, String cost, String rarity, String imageURL,
 			List<InventoryItem> inventoryItems) {
 		super();
 		this.id = id;
@@ -56,12 +59,9 @@ public class Card {
 		this.type = type;
 		this.cost = cost;
 		this.rarity = rarity;
-		this.price = price;
 		this.imageURL = imageURL;
 		this.inventoryItems = inventoryItems;
 	}
-
-	
 
 	public int getId() {
 		return id;
@@ -103,14 +103,6 @@ public class Card {
 		this.rarity = rarity;
 	}
 
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
 	public String getImageURL() {
 		return imageURL;
 	}
@@ -126,7 +118,15 @@ public class Card {
 	public void setInventoryItems(List<InventoryItem> inventoryItems) {
 		this.inventoryItems = inventoryItems;
 	}
-	
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	public void addInventoryItem(InventoryItem inventoryItem) {
 		if (inventoryItems == null) {
 			inventoryItems = new ArrayList<>();
@@ -148,7 +148,23 @@ public class Card {
 			inventoryItem.setCard(null);
 		}
 	}
-	
+
+	public void addUser(User user) {
+		if (users == null) {
+			users = new ArrayList<>();
+		}
+		if (!users.contains(user)) {
+			users.add(user);
+			user.addCard(this);
+		}
+	}
+
+	public void removeUser(User user) {
+		if (users != null && users.contains(user)) {
+			users.remove(user);
+			user.removeCard(this);
+		}
+	}
 
 	@Override
 	public String toString() {
@@ -163,8 +179,6 @@ public class Card {
 		builder.append(cost);
 		builder.append(", rarity=");
 		builder.append(rarity);
-		builder.append(", price=");
-		builder.append(price);
 		builder.append(", imageURL=");
 		builder.append(imageURL);
 		builder.append(", inventoryItems=");

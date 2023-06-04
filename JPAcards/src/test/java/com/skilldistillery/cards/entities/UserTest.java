@@ -17,7 +17,7 @@ class UserTest {
 	private static EntityManagerFactory emf;
 	private EntityManager em;
 	private User user;
-	
+
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		emf = Persistence.createEntityManagerFactory("JPAcards");
@@ -38,13 +38,25 @@ class UserTest {
 	void tearDown() throws Exception {
 		em.close();
 		user = null;
-		
+
+	}
+
+	@Test
+	void test_User_entity_mapping() {
+		assertNotNull(user);
+		assertEquals("Firsticus", user.getFirstName());
+	}
+
+	@Test
+	void test_User_Purchase_OneToMany_mapping() {
+		assertNotNull(user);
+		assertTrue(user.getPurchases().size() > 0);
 	}
 	
 	@Test
-	void test_InventoryItem_Condition_ManyToOne_mapping() {
+	void test_User_Card_ManyToMany_Mapping() {
 		assertNotNull(user);
-		assertEquals("Firsticus", user.getFirstName());
+		assertTrue(user.getDeckBuilder().size()>0);
 	}
 
 }

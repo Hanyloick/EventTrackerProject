@@ -46,7 +46,6 @@ public class CardServiceImpl implements CardService {
 		Card managedCard = cardRepo.findById(cardId);
 		managedCard.setName(card.getName());
 		managedCard.setType(card.getType());
-		managedCard.setPrice(card.getPrice());
 		managedCard.setCost(card.getCost());
 		managedCard.setRarity(card.getRarity());
 		managedCard.setImageURL(card.getImageURL());

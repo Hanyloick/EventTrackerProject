@@ -44,9 +44,15 @@ class InventoryItemTest {
 	@Test
 	void test_InventoryItem_Condition_ManyToOne_mapping() {
 		assertNotNull(inventoryItem);
-		assertEquals(1, inventoryItem.getCondition().getId());
+		assertEquals(9, inventoryItem.getCondition().getId());
 	}
 
+	@Test
+	void test_InventoryItem_Purchase_ManyToOne_mapping() {
+		assertNotNull(inventoryItem);
+		assertEquals(1, inventoryItem.getPurchase().getId());
+	}
+	
 	@Test
 	void test_InventoryItem_Card_ManyToOne_Mapping() {
 		assertNotNull(inventoryItem);

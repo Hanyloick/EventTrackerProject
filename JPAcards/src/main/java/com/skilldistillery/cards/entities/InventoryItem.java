@@ -17,14 +17,16 @@ public class InventoryItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
+	private double price;
 	@ManyToOne
 	@JoinColumn(name = "card_id")
 	private Card card;
-
 	@ManyToOne
-	@JoinColumn(name = "condition_id")
+	@JoinColumn(name = "card_condition_id")
 	private Condition condition;
+	@ManyToOne
+	@JoinColumn(name = "purchase_id")
+	private Purchase purchase;
 
 	public InventoryItem() {
 		super();
@@ -59,6 +61,39 @@ public class InventoryItem {
 
 	public void setCondition(Condition condition) {
 		this.condition = condition;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public Purchase getPurchase() {
+		return purchase;
+	}
+
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("InventoryItem [id=");
+		builder.append(id);
+		builder.append(", card=");
+		builder.append(card);
+		builder.append(", condition=");
+		builder.append(condition);
+		builder.append(", purchase=");
+		builder.append(purchase);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	@Override
