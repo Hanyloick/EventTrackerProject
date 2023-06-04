@@ -29,12 +29,12 @@ public class User {
 	private String email;
 	@Column(name = "image_url")
 	private String imageURL;
-	private double balance;
+	private Double balance;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Purchase> purchases;
-
+	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
 	private List<Card> deckBuilder;
 
@@ -43,7 +43,7 @@ public class User {
 	}
 
 	public User(int id, String firstName, String lastName, String username, String password, String email,
-			String imageURL, double balance) {
+			String imageURL, Double balance, List<Purchase> purchases, List<Card> deckBuilder) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -53,6 +53,8 @@ public class User {
 		this.email = email;
 		this.imageURL = imageURL;
 		this.balance = balance;
+		this.purchases = purchases;
+		this.deckBuilder = deckBuilder;
 	}
 
 	public int getId() {
@@ -111,11 +113,11 @@ public class User {
 		this.imageURL = imageURL;
 	}
 
-	public double getBalance() {
+	public Double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(double balance) {
+	public void setBalance(Double balance) {
 		this.balance = balance;
 	}
 

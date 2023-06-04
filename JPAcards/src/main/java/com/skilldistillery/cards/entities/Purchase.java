@@ -134,4 +134,5 @@ public class Purchase {
 		return id == other.id;
 	}
 
+
 }
