@@ -32,8 +32,7 @@ http://18.216.79.214:8080<br>
 | POST      | `/api/inventoryItems`     | Representation of a new _InventoryItem_ resource | Description of the result of the operation | **Create** endpoint |
 | PUT       | `/api/inventoryItems/1`   | Representation of a new version of _InventoryItem_ `1` | | **Replace** endpoint |
 | DELETE    | `/api/inventoryItems/1`   |              | | **Delete** route |
-<br>
-<br>	
+	
 
 # Technologies Used
 
