@@ -1,36 +1,45 @@
 # EventTrackerProject
 
 <br>
-This Project Allows The user to perform Basic Crud operations on a MySQL database table using REST APIs in Postman<br> 
+This Project Allows The user to perform Basic Crud operations on a MySQL database table using REST APIs in Postman<br>
+
+http://18.216.79.214:8080<br> 
 
 <br>
 
 # Endpoints
 
+	| HTTP Verb | URI                  | Request Body | Response Body | Purpose |
+|-----------|----------------------|--------------|---------------|---------|
+| GET       | `/api/cards`      |              | Collection of representations of all _Card_ resources | **List** all Cards
+| GET       | `/api/cards/17`   |              | Representation of _Card_ `17` | **Retrieve** endpoint |
+| POST      | `/api/cards`      | Representation of a new _Card_ resource | Description of the result of the operation | **Create** endpoint |
+| PUT       | `/api/cards/17`   | Representation of a new version of _Card_ `17` | | **Replace** endpoint |
+| DELETE    | `/api/cards/17`   |              | | **Delete** route |
 <br>
-	*GET  | http://localhost:8086/api/cards | Lists All Cards<br>
-	*GET  | http://localhost:8086/api/cards/{cardId} | Show Card By Id<br>
-	*POST | http://localhost:8086/api/cards | Add A New Card<br>
-	*PUT  | http://localhost:8086/api/cards/{cardId} | Update Existing Card<br>
-	*DELETE | http://localhost:8086/api/cards{cardId} | Delete Card By Id<br>
+	| HTTP Verb | URI                  | Request Body | Response Body | Purpose |
+|-----------|----------------------|--------------|---------------|---------|
+| GET       | `/api/purchases`      |              | Collection of representations of all _Purchase_ resources | **List** all Purchases
+| GET       | `/api/purchases/1`   |              | Representation of _Purchase_ `1` | **Retrieve** endpoint |
+| POST      | `/api/purchases`      | Representation of a new _Purchase_ resource | Description of the result of the operation | **Create** endpoint |
+| PUT       | `/api/purchases/1`   | Representation of a new version of _Purchase_ `1` | | **Replace** endpoint |
+| DELETE    | `/api/purchases/1`   |              | | **Delete** route |
 <br>
-	*GET  | http://localhost:8086/api/purchases | Lists All Purchases<br>
-	*GET  | http://localhost:8086/api/purchases/{id} | Show Purchase By Id<br>
-	*POST | http://localhost:8086/api/purchases | Add New Purchase<br>
-	*PUT  | http://localhost:8086/api/purchases/{id} | Update Existing Purchase<br>
-	*DELETE  | http://localhost:8086/api/purchases/{id} | Delete Purchase By Id<br>
+	| HTTP Verb | URI                  | Request Body | Response Body | Purpose |
+|-----------|----------------------|--------------|---------------|---------|
+| GET       | `/api/users`      |              | Collection of representations of all _User_ resources | **List** all Users
+| GET       | `/api/users/1`   |              | Representation of _User_ `1` | **Retrieve** endpoint |
+| POST      | `/api/users`      | Representation of a new _User_ resource | Description of the result of the operation | **Create** endpoint |
+| PUT       | `/api/users/1`   | Representation of a new version of _User_ `1` | | **Replace** endpoint |
+| DELETE    | `/api/users/1`   |              | | **Delete** route |
 <br>
-	*GET  | http://localhost:8086/api/users | List All Users<br>
-	*GET  | http://localhost:8086/api/users/{id} | Show User By Id<br>
-	*POST | http://localhost:8086/api/users | Add New User<br>
-	*PUT  | http://localhost:8086/api/users/{id} | Update Existing User<br>
-	*DELETE  | http://localhost:8086/api/users/{id} | Delete User By Id<br>
-<br>
-	*GET  | http://localhost:8086/api/inventoryItem | List All Inventory Items<br>
-	*GET  | http://localhost:8086/api/inventoryItem/{id} | Show InventoryItem By Id<br>
-	*POST | http://localhost:8086/api/inventoryItem | Add A New Inventory Item<br>
-	*PUT  | http://localhost:8086/api/inventoryItem/{id} | Update Existing InventoryItem<br>
-	*DELETE  | http://localhost:8086/api/inventoryItem/{id} | Delete InventoryItem By Id<br>
+| HTTP Verb | URI                  | Request Body | Response Body | Purpose |
+|-----------|----------------------|--------------|---------------|---------|
+| GET       | `/api/inventoryItems`      |              | Collection of representations of all _InventoryItem_ resources | **List** all Inventory Items
+| GET       | `/api/inventoryItems/1`   |              | Representation of _InventoryItem_ `1` | **Retrieve** endpoint |
+| POST      | `/api/inventoryItems`      | Representation of a new _InventoryItem_ resource | Description of the result of the operation | **Create** endpoint |
+| PUT       | `/api/inventoryItems/1`   | Representation of a new version of _InventoryItem_ `1` | | **Replace** endpoint |
+| DELETE    | `/api/inventoryItems/1`   |              | | **Delete** route |
 <br>	
 
 # Technologies Used
@@ -47,4 +56,4 @@ This Project Allows The user to perform Basic Crud operations on a MySQL databas
 
 # Lessons Learned
 
-I learned how to utilize REST(representational state transfer) APIs in postman<br> to test Repository, Service, and Controller method implementatons.
+I learned how to test REST(representational state transfer) APIs in postman<br> to test Repository, Service, and Controller method implementatons.
