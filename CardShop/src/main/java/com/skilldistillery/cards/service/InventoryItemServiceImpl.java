@@ -2,7 +2,6 @@ package com.skilldistillery.cards.service;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;

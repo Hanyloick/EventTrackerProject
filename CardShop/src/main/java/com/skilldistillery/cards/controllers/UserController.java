@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.skilldistillery.cards.entities.InventoryItem;
 import com.skilldistillery.cards.entities.User;
 import com.skilldistillery.cards.service.UserService;
 

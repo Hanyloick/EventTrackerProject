@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.cards.entities.Card;
-import com.skilldistillery.cards.entities.InventoryItem;
 import com.skilldistillery.cards.entities.Purchase;
 import com.skilldistillery.cards.entities.User;
 import com.skilldistillery.cards.repositories.UserRepository;
