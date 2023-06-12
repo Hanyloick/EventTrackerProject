@@ -5,7 +5,6 @@ window.addEventListener('load', function(event) {
 
 function init() {
 	getAllCards();
-	
 
 }
 
@@ -19,7 +18,7 @@ function getAllCards() {
 			if (xhr.status === 200) {
 				let cards = JSON.parse(xhr.responseText);
 				displayCards(cards);
-				console.log(cards)
+				buildAddFormButton(cards)
 			} else if (xhr.status === 404) {
 				console.error('Cards not found.')
 			} else {
@@ -33,17 +32,32 @@ function getAllCards() {
 function displayCards(cards) {
 	buildTable(cards);
 	let updateDiv = document.getElementById('updateDiv');
-		updateDiv.textContent ='';
+	updateDiv.textContent = '';
 	let addDiv = document.getElementById('addDiv');
-		addDiv.textContent='';
+	addDiv.textContent = '';
 }
 
 function buildTable(collection) {
-	let tableDiv = document.getElementById('tableDiv')
-		tableDiv.textContent = '';
+	let tableDiv = document.getElementById('tableDiv');
+	tableDiv.textContent = '';
+
 	let h1 = document.createElement('h1');
-		h1.textContent = 'All Entites ';
-		tableDiv.appendChild(h1);	
+	h1.textContent = 'All Entities';
+	tableDiv.appendChild(h1);
+
+	let mythicRares = 0;
+	for (let single of collection) {
+		for (let key in single) {
+			if (key === 'rarity' && single[key] === 'MythicRare') {
+				mythicRares++;
+			}
+		}
+	}
+
+	let h2 = document.createElement('h2');
+	h2.textContent = 'There are ' + mythicRares + ' Mythic Rare Cards';
+	tableDiv.appendChild(h2);
+
 	let table = document.createElement('table');
 	table.appendChild(createTableHead(collection));
 	table.appendChild(createTableBody(collection));
@@ -55,19 +69,26 @@ function createTableHead(collection) {
 	let headerRow = document.createElement('tr');
 	for (let key in collection[0]) {
 		let th = document.createElement("th");
-		th.textContent = key;
+		if (key === 'imageURL') {
+			th.textContent = 'Image';
+		} else {
+			th.textContent = key;
+		}
 		headerRow.appendChild(th);
 	}
 	tableHead.appendChild(headerRow);
+
 	return tableHead;
 }
 
 function createTableBody(collection) {
+	let mainDiv = document.getElementsByClassName('main-container')[0];
 	let tbody = document.createElement('tbody');
 	for (let single of collection) {
 		let tr = document.createElement('tr');
 		for (let key in single) {
 			let td = document.createElement('td');
+
 			if (key === 'imageURL') {
 				let img = document.createElement('img');
 				img.src = single[key];
@@ -77,11 +98,13 @@ function createTableBody(collection) {
 			} else {
 				td.textContent = single[key];
 			}
+
+
 			tr.appendChild(td);
 			tr.addEventListener('click', function(event) {
 				let singleId = single.id;
 				getTableDetails(singleId)
-				buildAddForm(single);
+				//	buildAddForm(single);
 			});
 		}
 
@@ -102,7 +125,6 @@ function getTableDetails(cardId) {
 			if (xhr.status === 200) {
 				let card = JSON.parse(xhr.responseText);
 				displayUpdateDetails(card);
-				console.log(card)
 			} else if (xhr.status === 404) {
 				console.error('Cards not found.')
 			} else {
@@ -120,16 +142,17 @@ function displayUpdateDetails(card) {
 	let updateDiv = document.getElementById('updateDiv');
 	updateDiv.textContent = '';
 	let updateForm = document.createElement('form');
-		updateForm.name = 'updateForm';
+	updateForm.name = 'updateForm';
+	updateForm.className = 'update-form';
 	let h1 = document.createElement('h1');
-		h1.textContent = 'Update or Delete Your Selection: ';
-		updateDiv.appendChild(h1);
+	h1.textContent = 'Update or Delete Your Selection: ';
+	updateDiv.appendChild(h1);
+
+
+
 	for (let fieldName in card) {
-		if (fieldName != 'id') {
-			let formLabel = document.createElement('label')
-			formLabel.textContent = fieldName;
-			updateForm.appendChild(formLabel);
-		}
+		let formGroup = document.createElement('div');
+		formGroup.className = 'form-group';
 		let input = document.createElement('input');
 		input.name = fieldName;
 
@@ -148,111 +171,134 @@ function displayUpdateDetails(card) {
 		}
 
 		input.value = card[fieldName];
-		let br = document.createElement('br');
-		updateForm.appendChild(input);
-		updateForm.appendChild(br);
+		formGroup.appendChild(input);
+		updateForm.appendChild(formGroup);
 	}
-	let submitButton = document.createElement('input');
-		submitButton.type = 'submit'
-		submitButton.value = 'Update';
-		updateForm.appendChild(submitButton);
-		
-		submitButton.addEventListener('click', function(event) {
-			event.preventDefault();
-			let collectedFormData = getFormData(updateForm);
-			updateCard(collectedFormData);
-		});
-		updateDiv.appendChild(updateForm)
-	
+
+
+
+	let submitButton = document.createElement('button');
+	submitButton.type = 'submit'
+	submitButton.textContent = 'Update';
+	submitButton.className = 'btn btn-outline-success';
+	updateForm.appendChild(submitButton);
+
+	submitButton.addEventListener('click', function(event) {
+		event.preventDefault();
+		let collectedFormData = getFormData(updateForm);
+		updateCard(collectedFormData);
+	});
+	updateDiv.appendChild(updateForm)
+
 	let deleteForm = document.createElement('form')
-		deleteForm.name = 'deleteForm'
+	deleteForm.name = 'deleteForm'
 	let cardId = document.createElement('input')
-		cardId.type = 'hidden'
-		cardId.value = card.id;
-	let deleteButton = document.createElement('input')
-		deleteButton.type = 'submit';
-		deleteButton.value = 'Delete'
-		deleteForm.appendChild(cardId)
-		deleteForm.appendChild(deleteButton)
-		updateDiv.appendChild(deleteForm)
-		
-		deleteButton.addEventListener('click', function(event) {
-			event.preventDefault();
-			
-			deleteItem(card.id);
-		});	
-		
-		let displayAllButton = document.createElement('button')
-			displayAllButton.textContent = 'View All Cards Again '
-			updateDiv.appendChild(displayAllButton);
-			displayAllButton.addEventListener('click', function() {
-				getAllCards();
-			});
+	cardId.type = 'hidden'
+	cardId.value = card.id;
+	let deleteButton = document.createElement('button')
+	deleteButton.type = 'submit';
+	deleteButton.textContent = 'Delete'
+	deleteButton.className = 'btn btn-outline-danger';
+	deleteForm.appendChild(cardId)
+	deleteForm.appendChild(deleteButton)
+	updateDiv.appendChild(deleteForm)
+
+	deleteButton.addEventListener('click', function(event) {
+		event.preventDefault();
+
+		deleteItem(card.id);
+	});
+
+
 }
 
-function buildAddForm(card) {
-let addDiv = document.getElementById('addDiv');
+function buildAddFormButton(cards) {
+	let addDiv = document.getElementById('addDiv');
+	let addFormButton = document.createElement('button');
+	addFormButton.textContent = 'Add A New Card';
+	addFormButton.className = 'btn btn-outline-success';
+	addDiv.appendChild(addFormButton);
+	addFormButton.addEventListener('click', function(event) {
+		buildAddForm(cards);
+
+	});
+}
+
+function buildAddForm(cards) {
+	let card = cards[0];
+	let addDiv = document.getElementById('addDiv');
 	addDiv.textContent = '';
-let h1 = document.createElement('h1');
+	let tableDiv = document.getElementById('tableDiv');
+	tableDiv.textContent = '';
+	let displayAllButton = document.createElement('button')
+	displayAllButton.className = 'btn btn-outline-success';
+	displayAllButton.textContent = 'View All Cards'
+	addDiv.appendChild(displayAllButton);
+	displayAllButton.addEventListener('click', function() {
+		getAllCards();
+	});
+	let h1 = document.createElement('h1');
 	h1.textContent = 'Add A New Item!';
 	addDiv.appendChild(h1);
+
 	let addForm = document.createElement('form');
-		addForm.name = 'addForm';
+	addForm.className = 'add-form'; // Add a CSS class to the form for stylig
+
 	for (let fieldName in card) {
 		if (fieldName != 'id') {
-			let formLabel = document.createElement('label')
-			formLabel.textContent = fieldName;
-			addForm.appendChild(formLabel);
-		}
-		let input = document.createElement('input');
-		input.name = fieldName;
+			let formGroup = document.createElement('div');
+			formGroup.className = 'form-group';
 
-		if (typeof card[fieldName] === 'number') {
-			if (fieldName === 'id') {
-				continue;
-			} else {
-				input.type = 'number';
+
+
+			let input = document.createElement('input');
+			input.name = fieldName;
+
+			if (typeof card[fieldName] === 'number') {
+				if (fieldName === 'id') {
+					continue;
+				} else {
+					input.type = 'number';
+				}
+			} else if (typeof card[fieldName] === 'string') {
+				input.type = 'text'; // Fix the typo here
 			}
-		} else if (typeof card[fieldName] === 'string') {
-			input.type === 'text';
+
+			input.placeholder = fieldName;
+
+			formGroup.appendChild(input);
+			addForm.appendChild(formGroup);
 		}
-
-		input.placeholder = fieldName;
-
-		
-		let br = document.createElement('br');
-		addForm.appendChild(input);
-		addForm.appendChild(br);
 	}
-	let submitButton = document.createElement('input');
-		submitButton.type = 'submit'
-		submitButton.value = 'Update';
-		addForm.appendChild(submitButton);
-		
-		submitButton.addEventListener('click', function(event) {
-			event.preventDefault();
-			let collectedFormData = getFormData(addForm);
-			addCard(collectedFormData);
-		});
-		addDiv.appendChild(addForm)
-		
-		
-		
-}		
+
+	let submitButton = document.createElement('button');
+	submitButton.className = 'btn btn-outline-success';
+	submitButton.type = 'submit';
+	submitButton.textContent = 'Create';
+	addForm.appendChild(submitButton);
+
+	submitButton.addEventListener('click', function(event) {
+		event.preventDefault();
+		let collectedFormData = getFormData(addForm);
+		addCard(collectedFormData);
+	});
+
+
+	addDiv.appendChild(addForm);
+}
+
 
 function addCard(card) {
 	let xhr = new XMLHttpRequest();
 
 	xhr.open('POST', 'http://localhost:8086/api/cards', true);
 	xhr.setRequestHeader("Content-type", "application/json");
-	
+
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === xhr.DONE) {
-			console.log('in ready state change' + xhr.readyState);
 			if (xhr.status === 201) {
 				let card = JSON.parse(xhr.responseText);
 				getAllCards();
-				console.log(card)
 			} else if (xhr.status === 404) {
 				console.error('Cards not found.')
 			} else {
@@ -267,22 +313,22 @@ function addCard(card) {
 
 
 function deleteItem(cardId) {
-	
-		let xhr = new XMLHttpRequest();
-		xhr.open('DELETE', 'api/cards/' + cardId, true);
-		xhr.onreadystatechange = function() {
+
+	let xhr = new XMLHttpRequest();
+	xhr.open('DELETE', 'api/cards/' + cardId, true);
+	xhr.onreadystatechange = function() {
 		if (xhr.readyState === xhr.DONE) {
 			if (xhr.status === 204) {
-			getAllCards();
-			
+				getAllCards();
+
 			} else if (xhr.status === 404) {
-				
+
 			} else {
-        		console.error(xhr.status + ': ' + xhr.responseText);
-        		}
-    		}
-  	};
-  	xhr.send();
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	};
+	xhr.send();
 }
 
 function updateCard(card) {
@@ -290,14 +336,12 @@ function updateCard(card) {
 
 	xhr.open('PUT', 'http://localhost:8086/api/cards/' + card.id, true);
 	xhr.setRequestHeader("Content-type", "application/json");
-	
+
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === xhr.DONE) {
-			console.log('in ready state change' + xhr.readyState);
 			if (xhr.status === 200) {
 				let cards = JSON.parse(xhr.responseText);
 				displayCard(card);
-				console.log(card)
 			} else if (xhr.status === 404) {
 				console.error('Cards not found.')
 			} else {
@@ -316,35 +360,30 @@ function getFormData(updateForm) {
 		updatedData[fieldName] = value;
 	})
 	return updatedData;
-	
-//	let name = updateForm.name.value;
-//	let type = updateForm.type.value;
-//	let cost = updateForm.cost.value;
-//	let rarity = updateForm.rarity.value;
-//	let imageURL = updateForm.imageURL.value;
- // 
-//	return {
-//		id: id,
- //   	name: name,
-//    	type: type,
- //   	cost: cost,
- //   	rarity: rarity,
- //   	imageURL: imageURL
-// // 	};
 }
 
 function displayCard(card) {
 	buildTableForSingle(card);
 }
 
+
 function buildTableForSingle(card) {
 	let tableDiv = document.getElementById('tableDiv')
 	tableDiv.textContent = '';
+	let displayAllButton = document.createElement('button')
+	displayAllButton.className = 'btn btn-outline-success';
+	displayAllButton.textContent = 'View All Cards'
+	tableDiv.appendChild(displayAllButton);
+	displayAllButton.addEventListener('click', function() {
+		getAllCards();
+	});
 	let h1 = document.createElement('h1');
-		h1.textContent = 'You Selected: '
-		tableDiv.appendChild(h1);
+	h1.textContent = 'You Selected: '
+	tableDiv.appendChild(h1);
 	let table = document.createElement('table');
-		table.textContent = '';
+	table.id = 'single Display';
+	table.className = 'table table-dark table-hover'
+	table.textContent = '';
 	table.appendChild(createTableHeadForSingle(card));
 	table.appendChild(createTableBodyForSingle(card));
 	tableDiv.appendChild(table);
@@ -355,7 +394,11 @@ function createTableHeadForSingle(card) {
 	let headerRow = document.createElement('tr');
 	for (let key in card) {
 		let th = document.createElement("th");
-		th.textContent = key;
+		if (key === 'imageURL') {
+			th.textContent = 'Image';
+		} else {
+			th.textContent = key;
+		}
 		headerRow.appendChild(th);
 	}
 	tableHead.appendChild(headerRow);
@@ -373,7 +416,7 @@ function createTableBodyForSingle(single) {
 			let img = document.createElement('img');
 			img.src = single[key];
 			img.alt = 'Image';
-			img.style.width = '30%'
+			img.style.width = '50%'
 			td.appendChild(img);
 		} else {
 			td.textContent = single[key];

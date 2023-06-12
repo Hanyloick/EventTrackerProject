@@ -1,7 +1,7 @@
 # EventTrackerProject
 
 <br>
-This Project Allows The user to perform Basic Crud operations on a MySQL database table using REST APIs in Postman<br>
+This Project Allows The user to submit AJAX requests to perform Basic Crud operations on a MySQL database table using a javascript front end<br>
 
 http://18.216.79.214:8080<br> 
 
@@ -53,8 +53,10 @@ http://18.216.79.214:8080<br>
 
 <br>
 *Java,<br>
+*Javascript<br>
 *Spring Boot,<br> 
-*Spring Data,<br> 
+*Spring Data,<br>
+*AJAX (Asyncrhonous XMLHttpRequests)<br> 
 *SQL,<br> 
 *REST,<br> 
 *JSON,<br> 
@@ -63,4 +65,5 @@ http://18.216.79.214:8080<br>
 
 # Lessons Learned
 
-I learned how to utilize REST(representational state transfer) APIs in postman<br> to test Repository, Service, and Controller method implementatons.
+<br>
+I learned how to build xhr (XMLHttpRequest) reequests to utilize REST APIs to perform basic crud operations.<br> I also was able to utilize javascript event listeners to build dynamic pages through DOM Manipulation.

@@ -1,0 +1,15 @@
+.body {
+	background-color: black;
+	color: white;
+}
+
+.add-form up .update-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1 0 20%; /* Set the width of each form group to occupy 20% of the available space */
+  padding: 5px;
+  box-sizing: border-box;
+}
