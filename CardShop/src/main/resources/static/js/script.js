@@ -11,7 +11,7 @@ function init() {
 
 function getAllCards() {
 	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'http://localhost:8086/api/cards', true);
+	xhr.open('GET', 'api/cards', true);
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === xhr.DONE) {
 			console.log('in ready state change' + xhr.readyState);
@@ -117,7 +117,7 @@ function createTableBody(collection) {
 function getTableDetails(cardId) {
 	let xhr = new XMLHttpRequest();
 
-	xhr.open('GET', 'http://localhost:8086/api/cards/' + cardId, true);
+	xhr.open('GET', 'api/cards/' + cardId, true);
 
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === xhr.DONE) {
@@ -291,7 +291,7 @@ function buildAddForm(cards) {
 function addCard(card) {
 	let xhr = new XMLHttpRequest();
 
-	xhr.open('POST', 'http://localhost:8086/api/cards', true);
+	xhr.open('POST', 'api/cards', true);
 	xhr.setRequestHeader("Content-type", "application/json");
 
 	xhr.onreadystatechange = function() {
@@ -334,7 +334,7 @@ function deleteItem(cardId) {
 function updateCard(card) {
 	let xhr = new XMLHttpRequest();
 
-	xhr.open('PUT', 'http://localhost:8086/api/cards/' + card.id, true);
+	xhr.open('PUT', 'api/cards/' + card.id, true);
 	xhr.setRequestHeader("Content-type", "application/json");
 
 	xhr.onreadystatechange = function() {
