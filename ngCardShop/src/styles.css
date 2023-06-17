@@ -1,0 +1,16 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+body {
+  background-color: darkblue;
+  color: #fff;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+a {
+  color: #00f;
+}
+
+.custom-cell {
+  color:aqua !important;
+}

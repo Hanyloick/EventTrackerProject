@@ -1,0 +1,209 @@
+<div class="top-div">
+  <div class="title-div">
+    <h1 class="btn btn-outline-light" disabled>MTGBuilder</h1>
+  </div>
+  <div class="add-button-div">
+    <button class="btn btn-outline-light add-button" (click)="getAddForm()">
+      +
+    </button>
+  </div>
+  <div class="Rarity Filter">
+    <div class="row">
+      <div
+        class="col-4"
+        *ngFor="let rarity of rarities"
+        (click)="selectedRarity = rarity"
+      >
+        <button class="btn btn-outline-light rarity-button">
+          {{ rarity }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="card-container" *ngIf="!selected && !showForm">
+  <div
+    (click)="displayCard(card)"
+    class="card"
+    *ngFor="let card of cardList | cardRarities : selectedRarity"
+  >
+    <div class="card-details">
+      <span class="card-name">{{ card.name }}</span>
+    </div>
+    <img
+      class="card-img"
+      src="{{ card.imageURL }}"
+      alt="{{ card.name }} Image"
+    />
+  </div>
+</div>
+
+<div *ngIf="selected && !editCard">
+  <div class="card-details-container">
+    <div class="card-image-div">
+      <img
+        class="card-details-image"
+        src="{{ selected.imageURL }}"
+        alt="{{ selected.name }} Image"
+      />
+    </div>
+    <div class="card-details-details">
+      <table class="table table-stripped table-hover">
+        <tbody>
+          <tr>
+            <td class="custom-bcell">ID:</td>
+            <td class="custom-bcell">{{ selected.id }}</td>
+          </tr>
+          <tr>
+            <td class="custom-bcell">Name:</td>
+            <td class="custom-bcell">{{ selected.name }}</td>
+          </tr>
+          <tr>
+            <td class="custom-bcell">Cost:</td>
+            <td class="custom-bcell">{{ selected.cost }}</td>
+          </tr>
+          <tr>
+            <td class="custom-bcell">Type:</td>
+            <td class="custom-bcell">{{ selected.type }}</td>
+          </tr>
+          <tr>
+            <td class="custom-bcell">Rarity:</td>
+            <td class="custom-bcell">{{ selected.rarity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <button class="btn btn-outline-danger" (click)="deleteCard(selected.id)">
+    Delete
+  </button>
+  <button class="btn btn-outline-light" (click)="displayTable()">
+    Show Full List
+  </button>
+  <button class="btn btn-outline-light" (click)="setEditCard(selected)">
+    Edit Card
+  </button>
+</div>
+
+<div *ngIf="editCard != null">
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Name:</span>
+    <input
+      type="text"
+      [(ngModel)]="editCard.name"
+      class="form-control"
+      value="{{ editCard.name }}"
+      aria-label="Nameame"
+      aria-describedby="basic-addon1"
+    />
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Rarity:</span>
+    <select
+      [(ngModel)]="editCard.rarity"
+      class="form-select"
+      aria-label="Rarity"
+    >
+      <option *ngFor="let option of rarities" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Cost:</span>
+    <input
+      type="text"
+      [(ngModel)]="editCard.cost"
+      class="form-control"
+      value="{{ editCard.cost }}"
+      aria-label="cost"
+      aria-describedby="basic-addon1"
+    />
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Type:</span>
+    <input
+      type="text"
+      [(ngModel)]="editCard.type"
+      class="form-control"
+      value="{{ editCard.type }}"
+      aria-label="Type"
+      aria-describedby="basic-addon1"
+    />
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Image:</span>
+    <input
+      type="text"
+      [(ngModel)]="editCard.imageURL"
+      class="form-control"
+      value="{{ editCard.imageURL }}"
+      aria-label="Image"
+      aria-describedby="basic-addon1"
+    />
+  </div>
+  <button class="btn btn-outline-danger" (click)="cancelEdit(editCard)">
+    Cancel</button
+  ><button class="btn btn-outline-light" (click)="updateTodo(editCard)">
+    Save
+  </button>
+</div>
+
+<div *ngIf="showForm">
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Name:</span>
+    <input
+      type="text"
+      [(ngModel)]="newCard.name"
+      class="form-control"
+      placeholder="Name"
+      aria-label="Name"
+      aria-describedby="basic-addon1"
+    />
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Rarity:</span>
+    <select
+      [(ngModel)]="newCard.rarity"
+      class="form-select"
+      aria-label="Rarity"
+    >
+      <option *ngFor="let option of rarities">{{ option }}</option>
+    </select>
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Cost:</span>
+    <input
+      type="text"
+      [(ngModel)]="newCard.cost"
+      class="form-control"
+      placeholder="Cost"
+      aria-label="Cost"
+      aria-describedby="basic-addon1"
+    />
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Type:</span>
+    <input
+      type="text"
+      [(ngModel)]="newCard.type"
+      class="form-control"
+      placeholder="Type"
+      aria-label="Type"
+      aria-describedby="basic-addon1"
+    />
+  </div>
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">Image:</span>
+    <input
+      type="text"
+      [(ngModel)]="newCard.imageURL"
+      class="form-control"
+      placeholder="ImageURL"
+      aria-label="Image"
+      aria-describedby="basic-addon1"
+    />
+  </div>
+  <button class="btn btn-outline-light" type="submit" name="Add Card" (click)="addCard(newCard)">Submit</button>
+</div>
