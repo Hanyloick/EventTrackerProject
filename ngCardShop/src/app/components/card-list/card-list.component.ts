@@ -22,6 +22,7 @@ export class CardListComponent implements OnInit {
   editCard: Card | null = null;
   showForm = false;
   rarities: string[] = [
+    "All",
     'BasicLand',
     'Common',
     'Uncommon',
@@ -29,6 +30,7 @@ export class CardListComponent implements OnInit {
     'MythicRare',
   ];
   selectedRarity = 'All';
+  userCards=false;
 
   ngOnInit(): void {
     this.loadAllCards();

@@ -2,9 +2,7 @@
   <div class="top-div">
     <div class="Rarity Filter" *ngIf="!selected && !editCard && !showForm">
       <div class="grid-container">
-        <button class="btn btn-outline-light rarity-button" (click)="loadAllCards()">
-          All
-        </button>
+
         <div class="button-container" *ngFor="let rarity of rarities">
           <button
             (click)="selectedRarity = rarity"
@@ -15,13 +13,16 @@
         </div>
         <div class="button-container" *ngIf="user?.deckBuilder?.length">
           <button
-            *ngIf="user"
+            *ngIf="user && !userCards"
             class="btn btn-outline-light rarity-button"
             (click)="loadUserCards(user.id)"
+            (click)="userCards=!userCards"
           >
             Owned
           </button>
-
+          <button *ngIf="userCards" class="btn btn-outline-light rarity-button" (click)="loadAllCards()" (click)="userCards=!userCards">
+            Gallery
+          </button>
         </div>
         <div class="add-button-div">
           <button
@@ -41,17 +42,15 @@
     class="card"
     *ngFor="let card of cardList | cardRarities : selectedRarity"
   >
-    <div class="card-details">
-      <span class="card-name">{{ card.name }}</span>
-    </div>
+
     <img
       (click)="displayCard(card)"
       class="card-img"
       src="{{ card.imageURL }}"
       alt="{{ card.name }} Image"
     />
-    <div>
-      <button (click)="addCardToUser(card)"></button>
+    <div class="card-footer">
+      <button class="btn btn-outline-dark addToUser" (click)="addCardToUser(card)">Add To Deck</button>
     </div>
   </div>
 </div>
