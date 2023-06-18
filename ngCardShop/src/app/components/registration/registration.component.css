@@ -1,0 +1,25 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.form-container {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  color: aqua;
+}
+
+.form-control {
+  background-color: #333;
+  color: #fff;
+}
+

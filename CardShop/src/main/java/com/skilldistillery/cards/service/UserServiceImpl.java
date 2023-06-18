@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.skilldistillery.cards.entities.Card;
 import com.skilldistillery.cards.entities.Purchase;
 import com.skilldistillery.cards.entities.User;
+import com.skilldistillery.cards.repositories.CardRepository;
 import com.skilldistillery.cards.repositories.UserRepository;
 
 @Service
@@ -18,10 +19,36 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepo;
+	@Autowired
+	private CardRepository cardRepo;
 
 	@Override
 	public List<User> index() {
 		return userRepo.findAll();
+	}
+	
+	@Override
+	public User validate(String username, String password) {
+		User managedUser = userRepo.findByUsernameAndPassword(username, password);
+		if(managedUser != null) {
+			return managedUser;
+		}
+		return null;
+	}
+	
+	@Override
+	public User addCardToUser(int userId, int cardId) {
+		User managedUser = userRepo.findById(userId);
+		Card managedCard = cardRepo.findById(cardId);
+		if(managedUser!=null && managedCard!=null) {
+			managedUser.addCard(managedCard);
+			managedCard.addUser(managedUser);
+			cardRepo.saveAndFlush(managedCard);
+			userRepo.saveAndFlush(managedUser);
+			return managedUser;
+		}
+		return null;
+		
 	}
 
 	@Override

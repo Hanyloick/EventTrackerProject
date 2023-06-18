@@ -2,7 +2,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Card } from './models/card';
+import { Card } from 'src/app/models/card';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -39,16 +39,13 @@ export class CardService {
       catchError((err:any) =>{
         console.error(err);
         return throwError(
-          () => new Error('TodoService.create(): error creating Todo: ' + err)
+          () => new Error('CardService.create(): error creating Card: ' + err)
         );
       })
     );
   }
 
   update(editCard: Card):  Observable<Card> {
-    // if (editCard.) {
-    //   editCard.completeDate = this.datePipe.transform(Date.now(), 'shortDate');
-    // }
     return this.http.put<Card>(this.url + "/" + editCard.id,editCard).pipe(
       catchError((err:any) =>{
         console.error(err);
@@ -64,7 +61,7 @@ export class CardService {
       catchError((err: any) => {
         console.error(err);
         return throwError(
-          () => new Error('CardService.delete(): error deleting Todo: ' + err)
+          () => new Error('CardService.delete(): error deleting Card: ' + err)
         );
       })
     );
@@ -77,7 +74,7 @@ export class CardService {
         return throwError(
           () =>
             new Error(
-              'TodoService.index(): error retrieving Todos: ' + err
+              'CardService.Show(): error retrieving Card: ' + err
             )
         );
       })

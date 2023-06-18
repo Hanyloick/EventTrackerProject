@@ -1,0 +1,37 @@
+<div class="container">
+  <div *ngIf="!user" class="login-container">
+    <h1>Welcome To MTGDBuilder</h1>
+    <form>
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="username"
+        placeholder="Enter username"
+        class="form-control"
+      />
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Enter password"
+        class="form-control"
+      />
+      <button class="btn btn-outline-light" (click)="login()">Login</button>
+    </form>
+    <button class="btn btn-link" (click)="showForm = !showForm">Register A New Account</button>
+    <div *ngIf="!showForm" class="registration-container">
+      <app-registration (registrationSuccess)="handleRegistrationSuccess($event)"></app-registration>
+    </div>
+  </div>
+  <div *ngIf="user" class="user-container">
+    <div class="user-control">
+    <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+    <button class="btn btn-outline-danger" (click)="logout()">Log Out</button>
+  </div>
+    <div class="card-list-container">
+      <app-card-list
+        [user] ="user">
+      </app-card-list>
+    </div>
+  </div>
+</div>

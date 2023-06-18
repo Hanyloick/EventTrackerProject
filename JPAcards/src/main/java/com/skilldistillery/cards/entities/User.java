@@ -34,7 +34,6 @@ public class User {
 	@JsonIgnore
 	@OneToMany(mappedBy = "user")
 	private List<Purchase> purchases;
-	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
 	private List<Card> deckBuilder;
 

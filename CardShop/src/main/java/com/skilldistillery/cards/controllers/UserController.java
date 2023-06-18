@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.cards.entities.Card;
 import com.skilldistillery.cards.entities.User;
 import com.skilldistillery.cards.service.UserService;
 
@@ -40,7 +41,30 @@ public class UserController {
 		}
 		return managedUser;
 	}
-
+	
+	@GetMapping("users/{username}/{password}")
+	public User login(@PathVariable String username, @PathVariable String password, HttpServletResponse res) {
+		User managedUser = userService.validate(username,password);
+		if (managedUser == null) {
+			res.setStatus(404);
+		}
+		return managedUser;
+	}
+	
+	@PutMapping("users/{userId}/{cardId}")
+    public User addCardToUser(@PathVariable Integer userId,
+    		@PathVariable Integer cardId, HttpServletResponse res) {
+		User updatingUser = null;
+        try {
+            updatingUser = userService.addCardToUser(userId, cardId);
+            return updatingUser;
+        } catch (Exception e) {
+        	e.printStackTrace();
+        	res.setStatus(400);
+    }
+		return updatingUser;
+}
+	
 	@PostMapping("users")
 	public User create(@RequestBody User user, HttpServletRequest req, HttpServletResponse res) {
 		if (user.getFirstName().isEmpty() || user.getLastName().isEmpty() || user.getUsername().isEmpty()

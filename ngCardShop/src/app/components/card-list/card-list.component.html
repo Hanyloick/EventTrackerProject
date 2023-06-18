@@ -1,13 +1,10 @@
 <div class="top-div">
-  <div class="title-div">
-    <h1 class="btn btn-outline-light" disabled>MTGBuilder</h1>
-  </div>
   <div class="add-button-div">
     <button class="btn btn-outline-light add-button" (click)="getAddForm()">
       +
     </button>
   </div>
-  <div class="Rarity Filter">
+  <div class="Rarity Filter" *ngIf="!selected && !editCard && !showForm">
     <div class="row">
       <div
         class="col-4"
@@ -18,24 +15,23 @@
           {{ rarity }}
         </button>
       </div>
-
     </div>
   </div>
 </div>
 <div class="card-container" *ngIf="!selected && !showForm">
-  <div
-    (click)="displayCard(card)"
-    class="card"
-    *ngFor="let card of cardList | cardRarities : selectedRarity"
-  >
+  <div class="card" *ngFor="let card of cardList | cardRarities : selectedRarity">
     <div class="card-details">
       <span class="card-name">{{ card.name }}</span>
     </div>
     <img
+      (click)="displayCard(card)"
       class="card-img"
       src="{{ card.imageURL }}"
       alt="{{ card.name }} Image"
     />
+    <div>
+      <button (click)="addCardToUser(card)"></button>
+    </div>
   </div>
 </div>
 
@@ -75,14 +71,14 @@
       </table>
     </div>
   </div>
-  <button class="btn btn-outline-danger" (click)="deleteCard(selected.id)">
-    Delete
+  <button class="btn btn-outline-light" (click)="setEditCard(selected)">
+    Edit Card
   </button>
   <button class="btn btn-outline-light" (click)="displayTable()">
     Show Full List
   </button>
-  <button class="btn btn-outline-light" (click)="setEditCard(selected)">
-    Edit Card
+  <button class="btn btn-outline-danger" (click)="deleteCard(selected.id)">
+    Delete
   </button>
 </div>
 
@@ -90,6 +86,7 @@
   <div class="input-group mb-3">
     <span class="input-group-text" id="basic-addon1">Name:</span>
     <input
+      required
       type="text"
       [(ngModel)]="editCard.name"
       class="form-control"
@@ -101,6 +98,7 @@
   <div class="input-group mb-3">
     <span class="input-group-text" id="basic-addon1">Rarity:</span>
     <select
+      required
       [(ngModel)]="editCard.rarity"
       class="form-select"
       aria-label="Rarity"
@@ -154,6 +152,7 @@
   <div class="input-group mb-3">
     <span class="input-group-text" id="basic-addon1">Name:</span>
     <input
+      required
       type="text"
       [(ngModel)]="newCard.name"
       class="form-control"
@@ -165,6 +164,7 @@
   <div class="input-group mb-3">
     <span class="input-group-text" id="basic-addon1">Rarity:</span>
     <select
+      required
       [(ngModel)]="newCard.rarity"
       class="form-select"
       aria-label="Rarity"
@@ -205,5 +205,12 @@
       aria-describedby="basic-addon1"
     />
   </div>
-  <button class="btn btn-outline-light" type="submit" name="Add Card" (click)="addCard(newCard)">Submit</button>
+  <button
+    class="btn btn-outline-light"
+    type="submit"
+    name="Add Card"
+    (click)="addCard(newCard)"
+  >
+    Submit
+  </button>
 </div>

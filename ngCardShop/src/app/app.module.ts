@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { CardListComponent } from './components/card-list/card-list.component';
 import { HomeComponent } from './components/home/home.component';
 import { CardRaritiesPipe } from './pipes/card-rarities.pipe';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { CardRaritiesPipe } from './pipes/card-rarities.pipe';
     AppComponent,
     CardListComponent,
     HomeComponent,
-    CardRaritiesPipe
+    CardRaritiesPipe,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
