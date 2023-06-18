@@ -22,6 +22,16 @@ public class CardServiceImpl implements CardService {
 		return cardRepo.findAll();
 
 	}
+	
+	@Override
+	public List<Card> indexByUserId(Integer userId) {
+		List<Card> usersCards = cardRepo.findByUsers_Id(userId);
+		if(usersCards.size()>0) {
+		return usersCards;
+		} else {
+			return null;
+		}
+	}
 
 	@Override
 	public Card showCard(int id) {

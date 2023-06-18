@@ -22,7 +22,6 @@ export class CardListComponent implements OnInit {
   editCard: Card | null = null;
   showForm = false;
   rarities: string[] = [
-    'All',
     'BasicLand',
     'Common',
     'Uncommon',
@@ -39,6 +38,7 @@ export class CardListComponent implements OnInit {
     this.cardService.index().subscribe({
       next: (cardList) => {
         this.cardList = cardList;
+        return cardList;
       },
       error: (card) => {
         console.error('CardListComponent.LoadCards(): error loading Cards:');
@@ -46,6 +46,21 @@ export class CardListComponent implements OnInit {
       },
     });
   }
+
+  loadUserCards(userId?: number) {
+    console.log(userId)
+    this.cardService.index(userId).subscribe({
+      next: (cardList) => {
+        this.cardList = cardList;
+        return cardList;
+      },
+      error: (card) => {
+        console.error('CardListComponent.LoadCards(): error loading Cards:');
+        console.error(card);
+      },
+    });
+  }
+
 
   getAddForm() {
     this.showForm = !this.showForm;

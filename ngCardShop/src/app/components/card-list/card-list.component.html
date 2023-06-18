@@ -1,25 +1,46 @@
-<div class="top-div">
-  <div class="add-button-div">
-    <button class="btn btn-outline-light add-button" (click)="getAddForm()">
-      +
-    </button>
-  </div>
-  <div class="Rarity Filter" *ngIf="!selected && !editCard && !showForm">
-    <div class="row">
-      <div
-        class="col-4"
-        *ngFor="let rarity of rarities"
-        (click)="selectedRarity = rarity"
-      >
-        <button class="btn btn-outline-light rarity-button">
-          {{ rarity }}
+<div class="card-details-container">
+  <div class="top-div">
+    <div class="Rarity Filter" *ngIf="!selected && !editCard && !showForm">
+      <div class="grid-container">
+        <button class="btn btn-outline-light rarity-button" (click)="loadAllCards()">
+          All
         </button>
+        <div class="button-container" *ngFor="let rarity of rarities">
+          <button
+            (click)="selectedRarity = rarity"
+            class="btn btn-outline-light rarity-button"
+          >
+            {{ rarity }}
+          </button>
+        </div>
+        <div class="button-container" *ngIf="user?.deckBuilder?.length">
+          <button
+            *ngIf="user"
+            class="btn btn-outline-light rarity-button"
+            (click)="loadUserCards(user.id)"
+          >
+            Owned
+          </button>
+
+        </div>
+        <div class="add-button-div">
+          <button
+            class="btn btn-outline-light add-button"
+            (click)="getAddForm()"
+          >
+            +
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<div class="card-container" *ngIf="!selected && !showForm">
-  <div class="card" *ngFor="let card of cardList | cardRarities : selectedRarity">
+
+<div class="container card-container" *ngIf="!selected && !showForm">
+  <div
+    class="card"
+    *ngFor="let card of cardList | cardRarities : selectedRarity"
+  >
     <div class="card-details">
       <span class="card-name">{{ card.name }}</span>
     </div>

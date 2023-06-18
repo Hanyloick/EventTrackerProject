@@ -14,12 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.cards.entities.Card;
 import com.skilldistillery.cards.service.CardService;
 
-@CrossOrigin({"*", "http://localhost/"})
+@CrossOrigin({ "*", "http://localhost/" })
 @RestController
 @RequestMapping("api")
 public class CardController {
@@ -32,7 +33,15 @@ public class CardController {
 		return cardService.index();
 
 	}
-	
+
+	@GetMapping("cards/{id}/users")
+	public List<Card> listAllUsersCards(@PathVariable Integer id, HttpServletResponse res) {
+		if(cardService.indexByUserId(id).size()>0) {
+		return cardService.indexByUserId(id);
+		}
+		return null;
+	}
+
 	@DeleteMapping("cards/{cardId}")
 	public void deleteCard(HttpServletResponse res, @PathVariable Integer cardId) {
 		if (cardService.delete(cardId)) {

@@ -20,19 +20,22 @@ export class CardService {
 
 
 
-  index(): Observable<Card[]> {
-    return this.http.get<Card[]>(this.url).pipe(
+  index(userId?: number): Observable<Card[]> {
+    let url = this.url;
+    if (userId) {
+      url += `/${userId}/users`;
+    }
+    return this.http.get<Card[]>(url).pipe(
       catchError((err: any) => {
         console.log(err);
         return throwError(
           () =>
-            new Error(
-              'CardService.index(): error retrieving Cards: ' + err
-            )
+            new Error('CardService.index(): error retrieving Cards: ' + err)
         );
       })
     );
   }
+
 
   create(card: Card): Observable<Card> {
     return this.http.post<Card>(this.url,card).pipe(

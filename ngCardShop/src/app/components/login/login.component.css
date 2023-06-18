@@ -59,5 +59,9 @@ a {
 }
 
 .card-list-container {
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 20px;
+  justify-items: center;
+  grid-auto-rows: minmax(300px, auto);
 }

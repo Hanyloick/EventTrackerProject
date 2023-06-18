@@ -17,4 +17,7 @@ public interface CardService {
 
 	Card showCard(int id);
 
+
+	List<Card> indexByUserId(Integer userId);
+
 }
