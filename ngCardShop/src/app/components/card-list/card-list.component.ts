@@ -34,6 +34,7 @@ export class CardListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAllCards();
+    // this.loadMTGCards();
   }
 
   loadAllCards() {
@@ -49,11 +50,25 @@ export class CardListComponent implements OnInit {
     });
   }
 
+  // loadMTGCards() {
+  //   this.cardService.getMTGCards().subscribe({
+  //     next: (cardList) => {
+  //       this.cardList = cardList;
+  //       return cardList;
+  //     },
+  //     error: (card) => {
+  //       console.error('CardListComponent.LoadCards(): error loading Cards:');
+  //       console.error(card);
+  //     },
+  //   });
+  // }
+
+
   loadUserCards(userId?: number) {
     console.log(userId)
     this.cardService.index(userId).subscribe({
       next: (cardList) => {
-        this.cardList = cardList;
+       this.cardList=cardList
         return cardList;
       },
       error: (card) => {
@@ -121,7 +136,10 @@ export class CardListComponent implements OnInit {
       console.log(this.user.id + " " + card.id)
       this.userService.addCardToUser(this.user.id, card).subscribe({
         next: (result) => {
-
+          if(this.user) {
+            this.user.deckBuilder.push(card);
+          this.loadUserCards(this.user.id)
+          }
         },
         error: (nojoy) => {
           console.error('CardLisComponent.addCardToUser(): error adding Card To User:');
@@ -130,6 +148,29 @@ export class CardListComponent implements OnInit {
       });
     }
   }
+
+ removeCardFromUser(card: Card) {
+  if (this.user) {
+    console.log(this.user.id + " " + card.id);
+    this.userService.removeCardFromUser(this.user.id, card).subscribe({
+      next: (result) => {
+        if (this.user?.deckBuilder) {
+          let index = this.user.deckBuilder.indexOf(card);
+          if (index !== -1) {
+            this.user.deckBuilder.splice(index, 1);
+
+          }
+        }
+      },
+      error: (nojoy) => {
+        console.error('CardLisComponent.addCardToUser(): error adding Card To User:');
+        console.error(nojoy);
+      },
+    });
+  }
+}
+
+
 
   displayCard(card: Card) {
     this.selected = card;

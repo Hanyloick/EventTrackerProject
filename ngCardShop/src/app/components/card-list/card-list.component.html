@@ -2,7 +2,6 @@
   <div class="top-div">
     <div class="Rarity Filter" *ngIf="!selected && !editCard && !showForm">
       <div class="grid-container">
-
         <div class="button-container" *ngFor="let rarity of rarities">
           <button
             (click)="selectedRarity = rarity"
@@ -27,9 +26,7 @@
         <div class="add-button-div">
           <button
             class="btn btn-outline-light add-button"
-            (click)="getAddForm()"
-          >
-            +
+            (click)="getAddForm()">+
           </button>
         </div>
       </div>
@@ -49,11 +46,15 @@
       src="{{ card.imageURL }}"
       alt="{{ card.name }} Image"
     />
-    <div class="card-footer">
+    <div *ngIf="!userCards" class="card-footer">
       <button class="btn btn-outline-dark addToUser" (click)="addCardToUser(card)">Add To Deck</button>
+    </div>
+    <div *ngIf="userCards" class="card-footer">
+      <button class="btn btn-outline-dark addToUser" (click)="removeCardFromUser(card)">Remove From Deck</button>
     </div>
   </div>
 </div>
+
 
 <div *ngIf="selected && !editCard">
   <div class="card-details-container">
@@ -169,6 +170,14 @@
 </div>
 
 <div *ngIf="showForm">
+  <div class="add-button-div">
+    <button
+      class="btn btn-outline-light add-button"
+      (click)="getAddForm()"
+    >
+      -
+    </button>
+  </div>
   <div class="input-group mb-3">
     <span class="input-group-text" id="basic-addon1">Name:</span>
     <input

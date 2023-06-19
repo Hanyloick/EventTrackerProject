@@ -1,21 +1,12 @@
-@import "~bootstrap/dist/css/bootstrap.css";
-
-body {
-  background-color: darkblue;
-  color: #fff;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-a {
-  color: #00f;
-}
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  margin-left: 15px;
+  margin-right: 15px;
+  max-width: 200rem;
 }
 
 .login-container {

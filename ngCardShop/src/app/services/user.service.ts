@@ -46,4 +46,21 @@ export class UserService {
       })
     );
   }
+
+  removeCardFromUser(userId: number, card: Card): Observable<User> {
+    console.log(userId + " " + card.id)
+    let options = {
+      body:null,
+    }
+    return this.http.put<User>(this.url + '/' + userId + '/cards', card).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError(
+          () => new Error('UserService.AddCardToUser(): error retrieving User: ' + err)
+        );
+      })
+    );
+  }
+
+
 }

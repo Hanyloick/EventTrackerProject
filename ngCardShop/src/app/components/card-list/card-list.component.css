@@ -4,6 +4,8 @@
   justify-content: center;
   gap: 16px;
   margin-bottom: 16px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .top-div {
@@ -40,10 +42,10 @@
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
+  grid-gap: 12px;
   justify-items: center;
-  grid-auto-rows: minmax(300px, auto);
+  grid-auto-rows: minmax(500px, auto);
 
 }
 
@@ -82,6 +84,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  max-width: max-content;
 }
 
 .card {

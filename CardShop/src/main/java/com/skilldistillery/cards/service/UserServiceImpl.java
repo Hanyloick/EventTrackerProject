@@ -50,6 +50,20 @@ public class UserServiceImpl implements UserService {
 		return null;
 		
 	}
+	
+	@Override
+	public User removeCardFromUser(int userId, Card card) {
+		User managedUser = userRepo.findById(userId);
+		Card managedCard = cardRepo.findById(card.getId());
+		if(managedUser!=null && managedCard!=null) {
+			managedUser.removeCard(managedCard);
+			managedCard.removeUser(managedUser);
+			cardRepo.saveAndFlush(managedCard);
+			userRepo.saveAndFlush(managedUser);
+			return managedUser;
+		}
+		return null;
+	}
 
 	@Override
 	public User show(int id) {

@@ -21,4 +21,6 @@ public interface UserService {
 
 	User addCardToUser(int userId, int cardId);
 
+	User removeCardFromUser(int userId, Card card);
+
 }
