@@ -45,9 +45,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` VARCHAR(100) NULL,
   `image_url` TEXT NULL,
   `balance` DECIMAL(8,2) UNSIGNED NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
-  UNIQUE INDEX `password_UNIQUE` (`password` ASC))
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
