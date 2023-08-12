@@ -349,10 +349,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `cardsdb`;
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `image_url`, `balance`) VALUES (1, 'Firsticus', 'Inserticus', 'user', 'user', 'email@gmail', NULL, 23.19);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `image_url`, `balance`) VALUES (2, 'Secondus', 'Inserticus', 'user1', 'user1', 'anotheremail@gmail', NULL, 71.29);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `image_url`, `balance`) VALUES (3, 'thirdus', 'inserticus', 'user2', 'user2', 'emailsfordays@gmail.com', NULL, 1042);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `image_url`, `balance`) VALUES (0, 'dfg', 'dfg', 'dfg', 'dfg', NULL, NULL, NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `username`, `password`, `email`, `image_url`, `balance`, `role`) VALUES (1, 'Pat', 'H', 'test', '$2a$10$nShOi5/f0bKNvHB8x0u3qOpeivazbuN0NE4TO0LGvQiTMafaBxLJS', 'lowki@gmail', NULL, NULL, 'Admin');
 
 COMMIT;
 
