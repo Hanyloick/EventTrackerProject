@@ -133,7 +133,6 @@ export class CardListComponent implements OnInit {
 
   addCardToUser(card: Card) {
     if (this.user) {
-      console.log(this.user.id + " " + card.id)
       this.userService.addCardToUser(this.user.id, card).subscribe({
         next: (result) => {
           if(this.user) {

@@ -40,14 +40,7 @@
   width: 100%;
 }
 
-.card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
-  grid-gap: 12px;
-  justify-items: center;
-  grid-auto-rows: minmax(500px, auto);
 
-}
 
 .card-image-div {
   flex: 0 0 150px;
@@ -85,6 +78,15 @@
   flex-wrap: wrap;
   justify-content: center;
   max-width: max-content;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(700px, 1fr));
+  grid-gap: 12px;
+  justify-items: center;
+  grid-auto-rows: minmax(500px, auto);
+
 }
 
 .card {

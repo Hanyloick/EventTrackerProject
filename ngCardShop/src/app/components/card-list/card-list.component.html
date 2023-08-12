@@ -37,8 +37,7 @@
 <div class="container card-container" *ngIf="!selected && !showForm">
   <div
     class="card"
-    *ngFor="let card of cardList | cardRarities : selectedRarity"
-  >
+    *ngFor="let card of cardList | cardRarities : selectedRarity">
 
     <img
       (click)="displayCard(card)"
