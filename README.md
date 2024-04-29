@@ -3,7 +3,7 @@
 <br>
 This Project Allows The user to submit AJAX requests to perform Basic Crud operations on a MySQL database table using a javascript front end<br>
 
-http://18.216.79.214:8080<br> 
+http://18.216.79.214:8080/CardShop<br> 
 
 <br>
 
